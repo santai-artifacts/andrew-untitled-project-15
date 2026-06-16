@@ -6,218 +6,7 @@
   <title>Snake</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0d0d0f;
-      --surface: #16161a;
-      --border: #2a2a30;
-      --snake-head: #4ade80;
-      --snake-body: #22c55e;
-      --snake-shadow: rgba(74, 222, 128, 0.35);
-      --food: #f97316;
-      --food-glow: rgba(249, 115, 22, 0.5);
-      --text: #f4f4f5;
-      --muted: #71717a;
-      --accent: #4ade80;
-      --danger: #f87171;
-      --grid: rgba(255,255,255,0.03);
-    }
-
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      overflow: hidden;
-    }
-
-    .game-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 0 4px;
-    }
-
-    .title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--accent);
-    }
-
-    .score-board {
-      display: flex;
-      gap: 24px;
-    }
-
-    .score-item {
-      text-align: right;
-    }
-
-    .score-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-
-    .score-value {
-      font-size: 1.3rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    #best-val { color: var(--food); }
-
-    canvas {
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 0 40px rgba(74, 222, 128, 0.06), 0 20px 60px rgba(0,0,0,0.5);
-      display: block;
-    }
-
-    .controls {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .btn {
-      padding: 8px 22px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, transform 0.1s;
-    }
-
-    .btn:hover { background: #1e1e24; border-color: #3a3a44; }
-    .btn:active { transform: scale(0.96); }
-
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #0d0d0f;
-    }
-    .btn-primary:hover { background: #6ee7a0; border-color: #6ee7a0; }
-
-    .speed-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .speed-select {
-      padding: 7px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.85rem;
-      cursor: pointer;
-      outline: none;
-    }
-    .speed-select:focus { border-color: var(--accent); }
-
-    .hint {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-
-    /* D-pad for mobile */
-    .dpad {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      margin-top: 4px;
-    }
-
-    .dpad-row { display: flex; gap: 4px; }
-
-    .dpad-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 1.3rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.1s, transform 0.08s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .dpad-btn:active { background: #2a2a32; transform: scale(0.92); }
-
-    @media (max-width: 560px) {
-      .dpad { display: flex; }
-      .hint { display: none; }
-    }
-
-    @media (pointer: coarse) {
-      .dpad { display: flex; }
-      .hint { display: none; }
-    }
-
-    /* Overlay */
-    #overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: rgba(13,13,15,0.82);
-      border-radius: 12px;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.25s;
-    }
-
-    #overlay.hidden { opacity: 0; pointer-events: none; }
-
-    .overlay-title {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .overlay-sub {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .canvas-wrap {
-      position: relative;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <div class="game-wrapper">
@@ -431,9 +220,9 @@
       const t = 1 - i / snake.length;
       const lightness = Math.floor(30 + t * 30);
       ctx.save();
-      ctx.shadowColor = 'rgba(74,222,128,0.15)';
+      ctx.shadowColor = 'rgba(248,113,113,0.15)';
       ctx.shadowBlur = 6;
-      ctx.fillStyle = `hsl(142, 70%, ${lightness}%)`;
+      ctx.fillStyle = `hsl(0, 80%, ${lightness}%)`;
       roundRect(seg.x*CELL + pad, seg.y*CELL + pad, CELL - pad*2, CELL - pad*2, r);
       ctx.fill();
       ctx.restore();
@@ -442,9 +231,9 @@
     // Snake head
     const head = snake[0];
     ctx.save();
-    ctx.shadowColor = 'rgba(74,222,128,0.6)';
+    ctx.shadowColor = 'rgba(248,113,113,0.6)';
     ctx.shadowBlur = 18;
-    ctx.fillStyle = '#4ade80';
+    ctx.fillStyle = '#f87171';
     roundRect(head.x*CELL + pad - 1, head.y*CELL + pad - 1, CELL - pad*2 + 2, CELL - pad*2 + 2, r + 1);
     ctx.fill();
     ctx.restore();
